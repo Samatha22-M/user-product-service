@@ -1,0 +1,111 @@
+{
+  "database":{
+     "doc":"Database Name",
+     "default":"user0001-product",
+     "format":"String",
+     "env":"DATABASE_NAME",
+     "arg":"database_name"
+  },
+  "dialect":{
+     "doc":"Postgres Dialect",
+     "default":"postgres",
+     "format":"String",
+     "env":"POSTGRES_DIALECT",
+     "arg":"Postgres_dialect"
+  },
+  "logging":{
+     "doc":"Postgres Logging",
+     "default":false,
+     "format":"Boolean",
+     "env":"POSTGRES_LOGGING",
+     "arg":"Postgres_logging"
+  },
+  "operatorsAliases":{
+     "doc":"Postgres Operators Aliases",
+     "default":false,
+     "format":"Boolean",
+     "env":"POSTGRES_OPERATORS_ALIASES",
+     "arg":"Postgres_operators_aliases"
+  },
+  "pool":{
+     "doc":"Postgres Connection Pool",
+     "default":{
+        "max":20,
+        "min":5,
+        "idle":10000,
+        "acquire":10000,
+        "evict":60000,
+        "handleDisconnects":true
+     },
+     "format":"Object",
+     "env":"POSTGRES_CONNECTION_POOL",
+     "arg":"Postgres_connection_pool"
+  },
+   "readArray":{
+     "doc":"Postgres read document array",
+     "default":[{"host":"localhost","port":"5432","username":"postgres222","password":"postgres222"}],
+     "env":"POSTGRES_READ_ARRAY",
+     "arg":"postgres_read_array",
+     "format":"Array"
+  },
+  "writeObject":{
+     "doc":"Postgres write document object",
+     "default":{
+        "host":"localhost",
+        "port":"5432",
+        "username":"postgres222",
+        "password":"postgres222"
+     },
+     "env":"POSTGRES_WRITE_OBJECT",
+     "arg":"postgres_write_object",
+     "format":"Object"
+  },
+  "globalUsername":{
+     "doc":"Postgres global username",
+     "default":"postgres222",
+     "env":"POSTGRES_GLOBAL_USERNAME",
+     "arg":"postgres_global_username",
+     "format":"String"
+  },
+  "globalPassword":{
+     "doc":"Postgres global password",
+     "default":"postgres222",
+     "env":"POSTGRES_GLOBAL_PASSWORD",
+     "arg":"postgres_global_password",
+     "format":"String"
+  },
+  "retry":{
+     "doc":"retrying for database ready state",
+     "default":"10000",
+     "env":"DATABASE_READY_RETRY",
+     "arg":"retry",
+     "format":"Number"
+  },
+ "sslEnabled":  {
+      "doc": "to enable SSL",
+      "format": "Boolean",
+      "default": false,
+      "env": "POSTGRES_SSL_ENABLED",
+      "arg": "postgres_ssl_enabled"
+   },
+   "sslCertPath": {
+      "doc": "Postgres SSL certificate path",
+      "default": "/usr/src/cacert.pem",
+      "env": "POSTGRES_SSL_PATH",
+      "arg": "postgres_ssl_path"
+  },
+  "rejectUnauthorizedCertificate": {
+      "doc" : "Flag for enable reject unauthorized certificate",
+      "default" : false,
+      "format" : "Boolean",
+      "env" : "POSTGRES_REJECT_UNAUTHORIZED_CERTIFICATE",
+      "arg" : "postgres_reject_unauthorized_certificate"
+  },
+  "sync":  {
+    "doc": "to enable forced Sync",
+    "format": "Boolean",
+    "default": false,
+    "env": "POSTGRES_FORCED_SYNC_ENABLED",
+    "arg": "postgres_forced_sync_enabled"
+ }
+}

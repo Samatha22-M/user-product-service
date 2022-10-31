@@ -1,0 +1,9 @@
+{
+    "modelFolderPath": {
+        "doc": "models folder path",
+        "default": "./../../models",
+        "env": "MODEL_FOLDER_PATH",
+        "arg": "model_folder_path"
+    }
+}
+
