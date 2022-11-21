@@ -1,5 +1,6 @@
 
-const { pgClient } = require("../clients")
+const { pgClient } = require("../clients");
+const errors = require("../errors");
 const { userDetails: userDetailsClient } = pgClient;
 
 class UserService {
@@ -15,15 +16,23 @@ class UserService {
                 password: reqBody.password,
                 role: reqBody.role
             };
-            await userDetailsClient.storeUser(userObj);
-            response.push(reqBody);
+            const userData = await userDetailsClient.getUser(userObj);
+            console.log(userData);
+            if (!userData) {
+                await userDetailsClient.storeUser(userObj);
+                response.push(reqBody);
 
-            return {
-                body: {
-                    response: response
-                }
-            };
+                return {
+                    body: {
+                        response: response
+                    }
+                };
+            }
+            else {
+                throw new errors.AlreadyExists();
+            }
         } catch (err) {
+            console.log("rrrrrrrrrrr", err)
             console.error({ fileName: "user.service.js", functionName: "createUser" }, "Failed to create user " + err.message);
             throw err;
         }
@@ -53,5 +62,6 @@ class UserService {
         }
 
     }
+
 }
 module.exports = new UserService();

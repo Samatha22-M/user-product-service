@@ -1,7 +1,7 @@
 {
   "database":{
      "doc":"Database Name",
-     "default":"user0001-product",
+     "default":"postgres",
      "format":"String",
      "env":"DATABASE_NAME",
      "arg":"database_name"
@@ -43,7 +43,7 @@
   },
    "readArray":{
      "doc":"Postgres read document array",
-     "default":[{"host":"localhost","port":"5432","username":"postgres222","password":"postgres222"}],
+     "default":[{"host":"localhost","port":"5432","username":"postgres","password":"postgres"}],
      "env":"POSTGRES_READ_ARRAY",
      "arg":"postgres_read_array",
      "format":"Array"
@@ -53,8 +53,8 @@
      "default":{
         "host":"localhost",
         "port":"5432",
-        "username":"postgres222",
-        "password":"postgres222"
+        "username":"postgres",
+        "password":"postgres"
      },
      "env":"POSTGRES_WRITE_OBJECT",
      "arg":"postgres_write_object",

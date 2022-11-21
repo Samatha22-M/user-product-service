@@ -1,16 +1,12 @@
-/*
- * ©2017 - 2021 DLT Global Inc., all rights reserved.
- */
-/* jshint latedef: nofunc */
 
 /**
  * provide application error classes
  * @module errors
  */
-var util     = require('util');
+var util = require('util');
 var inherits = util.inherits;
-var format   = util.format;
-var extend   = util._extend;
+var format = util.format;
+var extend = util._extend;
 
 var errors = module.exports = {};
 var DLWebServiceFatalError;
@@ -25,7 +21,7 @@ var DLWebServiceFatalError;
  * @param {number} edesc.customCode - default custom code
  * @throws {TypeError} JSON.stringify of circular object
  */
-function DLWebServiceError (msg, edesc, data) {
+function DLWebServiceError(msg, edesc, data) {
     Error.call(this);
     Error.captureStackTrace(this, this.constructor);
     this.status = this.statusCode = edesc.statusCode;
@@ -49,7 +45,7 @@ DLWebServiceError.prototype.name = 'DLWebServiceError';
  * @param {number} [code=this.customCode] custom error code
  */
 DLWebServiceError.prototype.push = function (msg, code) {
-    if (msg && (typeof(errors[msg.name]) !== "undefined")) {
+    if (msg && (typeof (errors[msg.name]) !== "undefined")) {
         this.errors = this.errors.concat(msg.errors);
         this.header(msg._headers);
         return this;
@@ -61,7 +57,7 @@ DLWebServiceError.prototype.push = function (msg, code) {
         return this;
     }
     if (typeof msg !== 'string') msg = JSON.stringify(msg);
-    this.errors.push({'msg': msg, 'code': (code || this.customCode)});
+    this.errors.push({ 'msg': msg, 'code': (code || this.customCode) });
     return this;
 };
 
@@ -72,16 +68,16 @@ DLWebServiceError.prototype.push = function (msg, code) {
  * @returns {DLWebServiceError}
  */
 DLWebServiceError.prototype.headers =
-DLWebServiceError.prototype.header = function (k, v) {
-    if ((arguments.length === 1) &&
+    DLWebServiceError.prototype.header = function (k, v) {
+        if ((arguments.length === 1) &&
             (!Array.isArray(k)) &&
             (typeof k === 'object')) {
-        extend(this._headers, k);
+            extend(this._headers, k);
+            return this;
+        }
+        this._headers[k] = (v || v === 0) ? String(v) : '';
         return this;
-    }
-    this._headers[k] = (v || v === 0) ? String(v) : '';
-    return this;
-};
+    };
 
 /**
  * convert Error Object to form required for response
@@ -89,7 +85,7 @@ DLWebServiceError.prototype.header = function (k, v) {
  */
 DLWebServiceError.prototype.toResponse = function () {
     var result = {
-        'body': {'errors': this.errors},
+        'body': { 'errors': this.errors },
         'headers': this._headers,
         'status': this.statusCode
     };
@@ -114,7 +110,7 @@ function errorFactory(ename, edesc) {
      * @constructor
      * @extends DLWebServiceError
      */
-    function CustomDLWebServiceError (msg, data) {
+    function CustomDLWebServiceError(msg, data) {
         if (!(this instanceof CustomDLWebServiceError))
             throw new Error(format('Invalid Error instantiation, use new %s()', ename));
         DLWebServiceError.call(this, msg, edesc, data);
@@ -127,7 +123,7 @@ function errorFactory(ename, edesc) {
 }
 
 /** for when really bad things happen */
-DLWebServiceFatalError = errors.DLWebServiceFatalError = errorFactory('DLWebServiceFatalError', {'statusCode': 500});
+DLWebServiceFatalError = errors.DLWebServiceFatalError = errorFactory('DLWebServiceFatalError', { 'statusCode': 500 });
 
 /**
  * helper to create new errors and load to global errors
@@ -139,7 +135,7 @@ function registerErrors(o) {
 
     for (var i in o) {
         if (o.hasOwnProperty(i)) {
-            if (typeof(errors[i]) !== "undefined")
+            if (typeof (errors[i]) !== "undefined")
                 throw new DLWebServiceFatalError(i + ' already exists.');
             errors[i] = errorFactory(i, o[i]);
         }
@@ -150,6 +146,6 @@ function registerErrors(o) {
     registerErrors(require("./errors"));
 })();
 
-errors.DLWebServiceError     = DLWebServiceError;
+errors.DLWebServiceError = DLWebServiceError;
 errors.registerErrors = registerErrors;
-errors.errorFactory   = errorFactory;
+errors.errorFactory = errorFactory;
